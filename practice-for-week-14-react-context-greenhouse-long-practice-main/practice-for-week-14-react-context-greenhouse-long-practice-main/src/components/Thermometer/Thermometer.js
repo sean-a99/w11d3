@@ -10,13 +10,13 @@ function Thermometer() {
   useEffect(() => {
     let timeout1;
     let timeout2;
-    if (desiredTemp < temperature) {
+    if (temperature < desiredTemp) {
       timeout1 = setTimeout(() => {
-        setDesiredTemp(oldDesiredTemp => oldDesiredTemp += 1)
+        setTemperature(oldTemp => oldTemp += 1)
       }, 1000)      
-    } else  if (desiredTemp > temperature) {
+    } else  if (temperature > desiredTemp) {
       timeout2 = setTimeout(() => {
-        setDesiredTemp(oldDesiredTemp => oldDesiredTemp -= 1)
+        setTemperature(oldTemp => oldTemp -= 1)
       }, 1000)
     }
 
@@ -30,10 +30,10 @@ function Thermometer() {
   return (
     <section>
       <h2>Thermometer</h2>
-      <div className="actual-temp">Actual Temperature: {desiredTemp}°F</div>
+      <div className="actual-temp">Actual Temperature: {temperature}°F</div>
       <ReactSlider
-        value={temperature}
-        onAfterChange={(temperature) => {setTemperature(temperature)}}
+        value={desiredTemp}
+        onAfterChange={(desiredTemp) => {setDesiredTemp(desiredTemp)}}
         className="thermometer-slider"
         thumbClassName="thermometer-thumb"
         trackClassName="thermometer-track"

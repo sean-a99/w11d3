@@ -10,13 +10,21 @@ function Hygrometer() {
   useEffect(() => {
     let timeout1;
     let timeout2;
-    if (desiredHum < humidity) {
+    if (humidity < desiredHum) {
       timeout1 = setTimeout(() => {
-        setDesiredHum(oldDesiredHum => oldDesiredHum += 2)
-      }, 1000)      
-    } else  if (desiredHum > humidity) {
+        if (humidity + 1 === desiredHum) {
+          setHumidity(oldHum => oldHum += 1)
+        } else {
+          setHumidity(oldHum => oldHum += 2)
+        };
+      }, 1000);
+    } else  if (humidity > desiredHum) {
       timeout2 = setTimeout(() => {
-        setDesiredHum(oldDesiredHum => oldDesiredHum -= 2)
+        if (humidity - 1 === desiredHum) {
+        setHumidity(oldHum => oldHum -= 1)
+        } else {
+          setHumidity(oldHum => oldHum -= 2)
+        }
       }, 1000)
     }
 
@@ -28,13 +36,14 @@ function Hygrometer() {
   }, [humidity, desiredHum])
 
 
+
   return (
     <section>
       <h2>Hygrometer</h2>
-      <div className="actual-humid">Actual Humidity: {desiredHum}%</div>
+      <div className="actual-humid">Actual Humidity: {humidity}%</div>
       <ReactSlider
-        value={humidity}
-        onAfterChange={(humidity) => {setHumidity(humidity)}}
+        value={desiredHum}
+        onAfterChange={(desiredHum) => {setDesiredHum(desiredHum)}}
         className="hygrometer-slider"
         thumbClassName="hygrometer-thumb"
         trackClassName="hygrometer-track"
