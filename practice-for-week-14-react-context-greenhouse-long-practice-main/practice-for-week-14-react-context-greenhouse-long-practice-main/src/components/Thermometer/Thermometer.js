@@ -6,26 +6,27 @@ import { useState, useEffect } from "react";
 function Thermometer() {
   const { temperature, setTemperature } = useClimate();
   const [desiredTemp, setDesiredTemp] = useState(temperature);
-
+  const [myInterval, setMyInterval] = useState(null);
   useEffect(() => {
-    let timeout1;
-    let timeout2;
-    if (temperature < desiredTemp) {
-      timeout1 = setTimeout(() => {
-        setTemperature(oldTemp => oldTemp += 1)
-      }, 1000)      
-    } else  if (temperature > desiredTemp) {
-      timeout2 = setTimeout(() => {
-        setTemperature(oldTemp => oldTemp -= 1)
-      }, 1000)
+    if (myInterval !== null) {
+      clearInterval(myInterval)
     }
 
-    return () => {
-      clearInterval(timeout1);
-      clearInterval(timeout2);
-    }
+    let currTemp = temperature
+    let interval = setInterval(() => {
+      if (currTemp < desiredTemp) {
+        setTemperature(oldTemp => oldTemp + 1)
+        currTemp += 1;
+      } else if (currTemp > desiredTemp) {
+        setTemperature(oldTemp => oldTemp - 1)
+        currTemp -= 1;
+      } else {
+        clearInterval(interval)
+      }
+    }, 1000)
 
-  }, [temperature, desiredTemp])
+    setMyInterval(interval)
+  }, [desiredTemp])
 
   return (
     <section>

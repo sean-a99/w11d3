@@ -28,10 +28,10 @@ function Hygrometer() {
       }, 1000)
     }
 
-    return () => {
-      clearInterval(timeout1);
-      clearInterval(timeout2);
-    }
+    // return () => {
+    //   clearInterval(timeout1);
+    //   clearInterval(timeout2);
+    // }
 
   }, [humidity, desiredHum])
 
