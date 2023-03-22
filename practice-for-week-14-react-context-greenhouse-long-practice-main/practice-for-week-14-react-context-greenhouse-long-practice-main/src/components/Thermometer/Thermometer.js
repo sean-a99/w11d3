@@ -25,15 +25,7 @@ function Thermometer() {
       clearInterval(timeout2);
     }
 
-  }, [desiredTemp])
-
-  useEffect(() => {
-    if (desiredTemp < temperature) {
-      setDesiredTemp(oldDesiredTemp => oldDesiredTemp += 1)
-    } else if (desiredTemp > temperature) {
-      setDesiredTemp(oldDesiredTemp => oldDesiredTemp -= 1)
-    }
-  }, [temperature])
+  }, [temperature, desiredTemp])
 
   return (
     <section>
