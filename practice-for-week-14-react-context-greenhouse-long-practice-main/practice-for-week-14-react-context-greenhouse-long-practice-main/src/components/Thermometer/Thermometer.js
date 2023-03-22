@@ -1,16 +1,44 @@
 import ReactSlider from "react-slider";
 import './Thermometer.css';
 import { useClimate } from "../../context/ClimateContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function Thermometer() {
   const { temperature, setTemperature } = useClimate();
   const [desiredTemp, setDesiredTemp] = useState(temperature);
 
+  useEffect(() => {
+    let timeout1;
+    let timeout2;
+    if (desiredTemp < temperature) {
+      timeout1 = setTimeout(() => {
+        setDesiredTemp(oldDesiredTemp => oldDesiredTemp += 1)
+      }, 1000)      
+    } else  if (desiredTemp > temperature) {
+      timeout2 = setTimeout(() => {
+        setDesiredTemp(oldDesiredTemp => oldDesiredTemp -= 1)
+      }, 1000)
+    }
+
+    return () => {
+      clearInterval(timeout1);
+      clearInterval(timeout2);
+    }
+
+  }, [desiredTemp])
+
+  useEffect(() => {
+    if (desiredTemp < temperature) {
+      setDesiredTemp(oldDesiredTemp => oldDesiredTemp += 1)
+    } else if (desiredTemp > temperature) {
+      setDesiredTemp(oldDesiredTemp => oldDesiredTemp -= 1)
+    }
+  }, [temperature])
+
   return (
     <section>
       <h2>Thermometer</h2>
-      <div className="actual-temp">Actual Temperature: {temperature}°F</div>
+      <div className="actual-temp">Actual Temperature: {desiredTemp}°F</div>
       <ReactSlider
         value={temperature}
         onAfterChange={(temperature) => {setTemperature(temperature)}}
