@@ -14,7 +14,7 @@ function LightSwitch() {
   }
 
   return (
-    <div className="light-switch day">
+    <div className={`light-switch ${themeName}`}>
       <div className="on" onClick={() => changeTheme('day')}>DAY</div>
       <div className="off" onClick={() => changeTheme('night')}>NIGHT</div>
     </div>
