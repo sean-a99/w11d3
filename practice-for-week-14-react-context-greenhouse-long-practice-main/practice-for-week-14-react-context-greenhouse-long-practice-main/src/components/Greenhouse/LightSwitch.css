@@ -17,6 +17,7 @@
 
 .light-switch.day .on, .light-switch.night .off {
   background-color: white;
+  cursor: pointer;
 }
 
 .light-switch.night .on, .light-switch.day .off {
